@@ -12,7 +12,9 @@
 #include <QClipboard>
 #include <QCompleter>
 #include <QSqlDatabase>
-#include "mytablemodels.h"
+#include "mylogmodel.h"
+#include "mytodomodel.h"
+#include "myassetsmodel.h"
 #include <memory>
 
 #include "version.h"

@@ -85,6 +85,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	options.insert("color-active" , QColor(255, 0 ,0));
 	options.insert("color-active-off",QApplication::palette().color(QPalette::Normal, QPalette::ButtonText));
 	
+ 	ui->actionAdd_button->setIcon(awesome->icon(fa::fa_solid, fa::fa_plus));
+	ui->assetAdd_button->setIcon(awesome->icon(fa::fa_solid, fa::fa_plus));
 // connect ui signals
 	connect(ui->actionAdd_button, SIGNAL(clicked()),this, SLOT(actionAdd_triggered()));
 	connect(ui->assetAdd_button, SIGNAL(clicked()),this, SLOT(assetAdd_triggered()));
@@ -122,21 +124,35 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	todoModel = new myTodoModel (CMMSDB, _undoStack, this);
 	ui->tableView->setModel(todoModel);
-	ui->tableView->setItemDelegateForColumn(todoModel->getEditCol(), (QStyledItemDelegate*) new MyTodoEditDelegate(ui->tableView));
-	ui->tableView->resizeColumnToContents(todoModel->getEditCol());
-	ui->tableView->setItemDelegateForColumn(todoModel->getDeleteCol(), (QStyledItemDelegate*) new MyTodoEditDelegate(ui->tableView));
-	ui->tableView->resizeColumnToContents(todoModel->getDeleteCol());
-
+    ui->tableView->setItemDelegate(new QSqlRelationalDelegate(ui->tableView));
+	ui->tableView->setItemDelegateForColumn(8,(QStyledItemDelegate*) new myDoneDelegate(ui->tableView));	
+	ui->tableView->setItemDelegateForColumn(9,(QStyledItemDelegate*) new myDeleteDelegate(ui->tableView));	
+	ui->tableView->setEditTriggers(QAbstractItemView::AllEditTriggers);
+	
+	int toHideA[]={0,4,5,6,7};
+	for (int i:toHideA) ui->tableView->horizontalHeader()->hideSection(i);
+	ui->tableView->resizeColumnToContents(8);
+	ui->tableView->resizeColumnToContents(9);
+	
+	
 	assetsModel = new myAssetsModel (CMMSDB, _undoStack, this);
 	ui->tableView_2->setModel(assetsModel);
 	ui->tableView_2->resizeColumnsToContents();
+    ui->tableView_2->setItemDelegate(new QSqlRelationalDelegate(ui->tableView_2));
+	
+	ui->tableView_2->setItemDelegateForColumn(12,(QStyledItemDelegate*) new myEditDelegate(ui->tableView_2));
+		ui->tableView_2->setItemDelegateForColumn(13,(QStyledItemDelegate*) new myDeleteDelegate(ui->tableView_2));
+ui->tableView_2->setEditTriggers(QAbstractItemView::AllEditTriggers);
+	int toHideB[]={0};
+	for (int i:toHideB) ui->tableView->horizontalHeader()->hideSection(i);
 
-
+	
+	
 	logModel = new myLogModel (CMMSDB, _undoStack, this);
 	ui->logTableView->setModel(logModel);
 	ui->logTableView->resizeColumnsToContents();
-
-
+	int toHideC[]={0};
+	for (int i:toHideC) ui->tableView->horizontalHeader()->hideSection(i);
 
 
 
@@ -282,12 +298,14 @@ void MainWindow::on_actionSave_triggered()
 //		task_set->flush();
    	_undoStack->setClean();
    	}
+   	
 }
 
 void MainWindow::cleanup()
 /* */{
 	QSettings settings;
 	qDebug()<<"Clean up ..."<<endline;	
+	QSqlDatabase::removeDatabase("CMMSDB");
 	on_actionSave_triggered();
    settings.setValue( SETTINGS_GEOMETRY, saveGeometry() );
    settings.setValue( SETTINGS_SAVESTATE, saveState() );

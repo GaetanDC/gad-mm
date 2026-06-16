@@ -56,7 +56,7 @@
            <enum>QTabWidget::TabPosition::North</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="elideMode">
            <enum>Qt::TextElideMode::ElideNone</enum>
@@ -158,7 +158,7 @@
                   <string>Add item</string>
                  </property>
                  <property name="text">
-                  <string>ADD</string>
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -213,7 +213,7 @@
                   <string>Add item</string>
                  </property>
                  <property name="text">
-                  <string>ADD</string>
+                  <string/>
                  </property>
                 </widget>
                </item>

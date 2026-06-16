@@ -32,7 +32,7 @@ win32 {
 include(QtAwesome/QtAwesome/QtAwesome.pri)
 #include(UGlobalHotkey/uglobalhotkey.pri)
 
-INCLUDEPATH += ./Caldav/
+INCLUDEPATH += ./
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -41,9 +41,10 @@ SOURCES += main.cpp\
     asset_editor.cpp \
     task_adder.cpp \
     task_closer.cpp \
-    mytablemodels.cpp \
-    mytabledelegates.cpp
-    
+    myassetsmodel.cpp \
+    mytodomodel.cpp \
+    mylogmodel.cpp \
+	 mytabledelegates.cpp
 
 HEADERS  += mainwindow.h \
     settingsdialog.h \
@@ -53,7 +54,9 @@ HEADERS  += mainwindow.h \
     asset_editor.h \
     task_adder.h \
     task_closer.h \
-    mytablemodels.h \
+    myassetsmodel.h \
+    mytodomodel.h \
+    mylogmodel.h \
     mytabledelegates.h
     
 FORMS    += mainwindow.ui \
