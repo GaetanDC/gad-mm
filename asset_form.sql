@@ -3,6 +3,7 @@
 select 
     'form' as component,
     'Assets Management'            as title,
+	'asset_form' as id,
     (
         case when $todo_id is null then
             'Add new Asset'
@@ -14,9 +15,9 @@ select
 
     (
         case when $todo_id is null then
-            'asset_adder_act.sql?isnew=1'
+            'asset_adder_act.sql?filter='|| $filter ||'&isnew=1'
         else
-	    concat('asset_adder_act.sql?todo_id',$todo_id)
+	    'asset_adder_act.sql?filter=' || $filter || '&todo_id=' || $todo_id
         end
     ) as action
 
@@ -56,7 +57,7 @@ select
 	3 as width,
     'System...' as placeholder,
 	 ( select json_group_array(json_object('label', label, 'value', value))
-	 from ( select concat('(',nom,') ',description) as label, nom as value from Systems )
+	 from ( select concat('(',Tag,') ',short) as label, Tag as value from Systems )
 	    ) as options,
 
     (select System from asset_list where Tag = $todo_id) as value
@@ -165,7 +166,7 @@ WHERE asset=$todo_id
 SELECT 'button' as component, 'asset_form' as form;
 SELECT 
     'Back'        AS title,
-    'sub_assets.sql'      AS link,     -- URL de redirection au clic
+    'sub_assets.sql?selected_system=' || $filter      AS link,     -- URL de redirection au clic
     'secondary'      AS color    -- Couleur grise standard pour une annulation
 ;
 

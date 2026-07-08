@@ -27,7 +27,7 @@ WHERE Type=:type AND $isnew = 1
 ;
 
 
-SELECT 'redirect' AS component, concat('asset_form.sql?todo_id=',:tag) AS link;
+SELECT 'redirect' AS component, 'sub_assets.sql?selected_system=' || $filter || '&todo_id=' || :tag AS link;
 
 
 

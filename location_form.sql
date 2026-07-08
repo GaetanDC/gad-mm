@@ -12,6 +12,7 @@ returning
 select 
     'form'            as component,
     'Location'            as title,
+	'location_form' as id,
     (
         case when $todo_id is null then
             'Add new Location'
@@ -25,7 +26,7 @@ select
     'tag' as name,
 	2 as width,
     'Tag...' as placeholder,
-	TRUE as disabled,
+	TRUE as readonly,
     (select Tag from Locations where tag = $todo_id) as value
 ;
 
@@ -69,7 +70,7 @@ select
 ;
 
 
-SELECT 'button' as component, 'asset_form' as form;
+SELECT 'button' as component, 'location_form' as form;
 SELECT 
     'Annuler'        AS title,
     'sub_locations.sql'      AS link,     -- URL de redirection au clic

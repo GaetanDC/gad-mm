@@ -1,6 +1,6 @@
 select 
 	'form' as component,
-	'Location detail' as title,
+	'System detail' as title,
 	'' AS validate
 ;
 
@@ -13,13 +13,20 @@ select
 ;
 
 select
-	'Description' as label,
-	'description' as name,
+	'Name' as label,
+	'short' as name,
 	5 as width,
 	TRUE as readonly,
-	(select Description from Locations WHERE tag=$todo_id) as value
+	(select Short from Systems WHERE Tag=$todo_id) as value
 ;
 
+select
+	'Description' as label,
+	'long' as name,
+	12 as width,
+	TRUE as readonly,
+	(select Long from Systems WHERE Tag=$todo_id) as value
+;
 
 
 select 
@@ -34,13 +41,12 @@ select
 	Tag,System, Type, Description,
 	Tag as _sqlpage_id
 	from asset_list
-	WHERE (asset_list.Location LIKE $todo_id) 
+	WHERE (asset_list.System LIKE $todo_id) 
 ;
 
 
-
-SELECT 'button' as component, 'asset_form' as form;
+SELECT 'button' as component, 'system_form' as form;
 SELECT 
     'Return'        AS title,
-    'sub_locations.sql'      AS link,     -- URL de redirection au clic
+    'sub_systems.sql'      AS link,     -- URL de redirection au clic
     'secondary'      AS color;    -- Couleur grise standard pour une annulation

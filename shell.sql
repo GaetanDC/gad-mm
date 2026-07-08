@@ -3,6 +3,7 @@ WITH menu_data AS (
     SELECT 'Assets', 'sub_assets.sql' UNION ALL
     SELECT 'Logs', 'sub_logs.sql' UNION ALL
     SELECT 'Users', 'sub_users.sql' UNION ALL
+    SELECT 'Systems', 'sub_systems.sql' UNION ALL
     SELECT 'Locations', 'sub_locations.sql' UNION ALL
     SELECT 'Timeline', 'timeline.sql'
 )
