@@ -1,0 +1,7 @@
+{
+  "database_url": "sqlite://cmms.db?mode=rwc",
+  "host": "://hserver.local",
+  "listen_on": "hserver.local:8080",
+  "listen_on": "192.168.1.150:8080",
+  "listen_on": "[::]:8080"
+}
