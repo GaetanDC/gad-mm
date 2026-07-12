@@ -1,26 +1,18 @@
--- select 'debug' as component, :tag, $todo_id;
+select 'debug' as component, :tag, $todo_id;
 
 select 
-    'form' as component,
-    'Assets Management'            as title,
-	'asset_form' as id,
-    (
-        case when $todo_id is null then
-            'Add new Asset'
-        else
-            'Edit Asset'
-        end
-    ) as validate,
+	'form' as component,
+	'Assets Management'            as title,
 	'asset_form' as id,
 
-    (
-        case when $todo_id is null then
-            'asset_adder_act.sql?filter='|| $filter ||'&isnew=1'
-        else
-	    'asset_adder_act.sql?filter=' || $filter || '&todo_id=' || $todo_id
-        end
-    ) as action
-
+	CASE when $todo_id is null 
+	THEN 'Add new Asset'
+	ELSE 'Edit Asset'
+        END AS validate,
+	
+	sqlpage.link('asset_adder_act.sql', 
+	        json_object( 'filter', $filter,  'todo_id', $todo_id)
+	) AS action;
 ;
 
 select 
@@ -57,7 +49,7 @@ select
 	3 as width,
     'System...' as placeholder,
 	 ( select json_group_array(json_object('label', label, 'value', value))
-	 from ( select concat('(',Tag,') ',short) as label, Tag as value from Systems )
+	 from ( select Tag || ' (' || short || ')' as label, Tag as value from Systems )
 	    ) as options,
 
     (select System from asset_list where Tag = $todo_id) as value
@@ -76,7 +68,7 @@ select
 	3 as width,
     'Type...' as placeholder,
 	 ( select json_group_array(json_object('label', label, 'value', value))
-	 from ( select concat('(',type,') ',Description) as label, type as value from Asset_types )
+	 from ( select type || ' (' || Description || ')' as label, type as value from Asset_types )
 	    ) as options,
 
     (select Type from asset_list where Tag = $todo_id) as value
@@ -143,6 +135,17 @@ select
 	(select Parent from asset_list where Tag = $todo_id) as value
 ;
 
+
+SELECT 
+    'button' as component,
+    'center' as justify;
+select 
+    sqlpage.link('template_form.sql', json_object('asset', $todo_id)) as link,
+    'green' as color,
+    'Add new Action'  as title,
+    'circle-plus'  as icon;
+
+
 select 'table' as component,
    'Actions' as title,
 	FALSE as small,
@@ -153,7 +156,6 @@ select 'table' as component,
 	 json_object('name','Edit','icon','edit','link','template_form.sql?todo_id={id}&asset='||COALESCE($todo_id,'')),
 	 json_object('name','Delete','icon','trash','link','template_del.sql?todo_id={id}&asset='||COALESCE($todo_id,''))
 	) as custom_actions
-
 ;
 
 select Action, Delay, Comment,
@@ -163,19 +165,13 @@ WHERE asset=$todo_id
 ;
 
 
-SELECT 'button' as component, 'asset_form' as form;
+
+
+SELECT 'button' as component;
 SELECT 
-    'Back'        AS title,
-    'sub_assets.sql?selected_system=' || $filter      AS link,     -- URL de redirection au clic
-    'secondary'      AS color    -- Couleur grise standard pour une annulation
+--	'asset_form' as form,
+	'Back'        AS title,
+	sqlpage.link('sub_assets.sql',json_object('selected_system', $filter))      AS link,     -- URL de redirection au clic
+	'secondary'      AS color    -- Couleur grise standard pour une annulation
 ;
 
-
-SELECT 
-    'button' as component,
-    'center' as justify;
-select 
-    'template_form.sql?asset='||$todo_id     as link,
-    'green' as color,
-    'Add new Action'  as title,
-    'circle-plus'  as icon;

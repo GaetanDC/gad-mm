@@ -11,7 +11,8 @@ SELECT :tag, :location, :system,  :subsystem, :type, :subtype, :description, :su
 INSERT INTO Template_Planning(asset, Action, Delay, Comment)
 SELECT :tag as Asset, Action, Delay, Comment
 FROM Template_M
-WHERE Type=:type AND $isnew = 1 ;
+WHERE Type=:type AND $todo_id is null
+;
 
 
 
@@ -23,11 +24,14 @@ SELECT :tag as Asset,
 	0 as Done,
 	0 as Executor
 FROM Template_M
-WHERE Type=:type AND $isnew = 1
+WHERE Type=:type AND $todo_id is null
 ;
 
 
-SELECT 'redirect' AS component, 'sub_assets.sql?selected_system=' || $filter || '&todo_id=' || :tag AS link;
+SELECT 'redirect' AS component,
+	sqlpage.link('sub_assets.sql',
+	  json_object('selected_system', $filter,'todo_id', :tag)) AS link
+;
 
 
 

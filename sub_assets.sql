@@ -17,7 +17,7 @@ select 'select' as type,
 	'All...' as empty_option,
 	5 as width,
 	 ( select json_group_array(json_object('label', label, 'value', value))
-	 from ( select Short as label, Tag as value from Systems )
+	 from ( select Tag || ' (' || short || ')' as label, Tag as value from Systems )
 	    ) as options,
 	'selected_system' AS name,
 	'System :' as label,
