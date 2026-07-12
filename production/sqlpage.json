@@ -1,0 +1,11 @@
+{
+  "database_url": "sqlite:///usr/local/share/gad-mm/database/cmms.db?mode=rwc",
+  "web_root":"/usr/local/share/gad-mm/www",
+  "environement":"production",
+  "cache_stale_duration_ms": 999999999,
+  "port":8081,
+  "host": "://hserver.local",
+  "listen_on": "hserver.local:8081",
+  "listen_on": "192.168.1.150:8081",
+  "listen_on": "[::]:8081"
+}
