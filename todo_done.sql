@@ -8,13 +8,12 @@ select 'form' as component,
 ;
 
 
-select 'text' as type,
+select 'hidden' as type,
 	'id' as name,
-	'hidden' as type,
 	$todo_id as value
 ;
 
-select 'text as type,
+select 'text' as type,
 	'tag' as name,
 	'Tag' as label,
 	3 as width,
@@ -23,7 +22,7 @@ select 'text as type,
 ;
 
 select 'text' as type,
-	action' as name,
+	'action' as name,
 	'Action' as label,
 	3 as width,
 	TRUE AS readonly,
@@ -36,10 +35,9 @@ select 'date' as type,
 	3 as width
 ;
 
-select 'text' as type,
+select 	'select' as type,
 	'user' as name,
-	'select' as type,
-	"Executor" as label,
+	'Executor' as label,
 	4 as width,
 	(SELECT json_group_array( json_object( 'value', ID, 'label', Name ) )  FROM People) as options
 ;
