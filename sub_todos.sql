@@ -29,7 +29,7 @@ select 'table' as component,
 --	'done,edit,delete' as actions,
 	'Empty ...' as empty_title,
 	TRUE as sort,
-	FALSE as search,
+	true as search,
 	JSON('[{"name":"Edit","icon":"edit","link":"todo_form.sql?todo_id={id}"},
 		{"name":"Delete","icon":"trash","link":"todo_del.sql?todo_id={id}"},
 		{"name":"Close","icon":"check","link":"todo_done.sql?todo_id={id}"}

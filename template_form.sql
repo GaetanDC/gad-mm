@@ -56,12 +56,13 @@ SELECT	'select' as type,
     (select Action from Template_Planning where ID = $todo_id) as value
 ;
 
-select 
+select 'number' as type, 
     'Delay (days)' as label,
     'delay' as name,
 	2 as width,
-    'd...' as placeholder,
-    (select Delay from Template_Planning where ID = $todo_id) as value
+	30 as min,
+    365 as placeholder,
+    COALESCE ((select Delay from Template_Planning where ID = $todo_id),30) as value
 ;
 
 select 
