@@ -12,7 +12,7 @@ CREATE TABLE "log_M" (
 	FOREIGN KEY("Action") REFERENCES "Actions"("tag"),
 	FOREIGN KEY("Asset") REFERENCES "asset_list"("Tag"),
 	FOREIGN KEY("Executor") REFERENCES "People"("ID")
-)
+);
 
 
 CREATE TABLE "asset_list" (
@@ -33,7 +33,7 @@ CREATE TABLE "asset_list" (
 	CONSTRAINT "par" FOREIGN KEY("Parent") REFERENCES "asset_list"("Tag"),
 	CONSTRAINT "system" FOREIGN KEY("System") REFERENCES "Systems"("Tag"),
 	CONSTRAINT "typ" FOREIGN KEY("Type") REFERENCES "Asset_types"("type")
-)
+);
 
 CREATE TABLE "Template_Planning" (
 	"ID"	INTEGER NOT NULL UNIQUE,
@@ -44,7 +44,7 @@ CREATE TABLE "Template_Planning" (
 	PRIMARY KEY("ID" AUTOINCREMENT),
 	FOREIGN KEY("Action") REFERENCES "Actions"("tag"),
 	FOREIGN KEY("asset") REFERENCES "asset_list"("Tag")
-)
+);
 
 
 CREATE TABLE "Template_M" (
@@ -54,14 +54,14 @@ CREATE TABLE "Template_M" (
 	"Comment"	TEXT,
 	FOREIGN KEY("Action") REFERENCES "Actions"("tag"),
 	FOREIGN KEY("Type") REFERENCES "Asset_types"("type")
-)
+);
 
 CREATE TABLE "Systems" (
 	"Tag"	TEXT NOT NULL UNIQUE,
 	"Short"	TEXT,
 	"Long"	TEXT,
 	PRIMARY KEY("Tag")
-)
+);
 
 CREATE TABLE "People" (
 	"ID"	INTEGER NOT NULL UNIQUE,
@@ -69,7 +69,7 @@ CREATE TABLE "People" (
 	"Function"	TEXT,
 	"Date_out"	NUMERIC,
 	PRIMARY KEY("ID")
-)
+);
 
 CREATE TABLE "Locations" (
 	"tag"	TEXT NOT NULL UNIQUE,
@@ -78,14 +78,14 @@ CREATE TABLE "Locations" (
 	"Room"	TEXT,
 	"Description"	TEXT,
 	PRIMARY KEY("tag")
-)
+);
 
 
 CREATE TABLE "Asset_types" (
 	"type"	TEXT NOT NULL UNIQUE,
 	"Description"	TEXT,
 	PRIMARY KEY("type")
-)
+);
 
 
 CREATE TABLE "Actions" (
@@ -93,7 +93,7 @@ CREATE TABLE "Actions" (
 	"Short_desc"	TEXT,
 	"Long_desc"	TEXT,
 	PRIMARY KEY("tag")
-)
+);
 
 INSERT INTO "main"."Actions" ("tag", "Short_desc", "Long_desc") VALUES ('CLEAN1', 'Supperficial clean-up', '');
 INSERT INTO "main"."Actions" ("tag", "Short_desc", "Long_desc") VALUES ('CLEAN2', 'In-deep cleaning', '');
