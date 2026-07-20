@@ -77,5 +77,5 @@ select
 SELECT 'button' as component, 'template_form' as form;
 SELECT 
     'Back'        AS title,
-    'asset_form.sql?todo_id='||$todo_id      AS link,     -- URL de redirection au clic
+    'asset_form.sql?todo_id='||$asset      AS link,     -- URL de redirection au clic
     'secondary'      AS color;    -- Couleur grise standard pour une annulation

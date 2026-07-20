@@ -1,4 +1,4 @@
-select 'debug' as component, :tag, $todo_id;
+-- select 'debug' as component, :tag, $todo_id;
 
 select 
 	'form' as component,
@@ -80,6 +80,15 @@ select
     'Sub-type...' as placeholder,
     (select subType from asset_list where Tag = $todo_id) as value
 ;
+
+select 
+	'Date' as type,
+	3 as width,
+    'Installation Date' as label,
+    'date_install' as name,
+    (select Date_install from asset_list where Tag = $todo_id) as value
+;
+
 select 
     'Description' as label,
 	8 as width,
@@ -96,17 +105,11 @@ select
     (select Supplier from asset_list where Tag = $todo_id) as value
 ;
 
-select 
-	'Date' as type,
-	3 as width,
-    'Installation Date' as label,
-    'date_install' as name,
-    (select Date_install from asset_list where Tag = $todo_id) as value
-;
 
 select 
     'Characteristics' as label,
     'characteristics' as name,
+	6 as width,
     'Characteristics...' as placeholder,
     (select Characteristics from asset_list where Tag = $todo_id) as value
 ;
